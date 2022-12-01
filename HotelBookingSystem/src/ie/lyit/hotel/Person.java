@@ -1,6 +1,12 @@
 package ie.lyit.hotel;
 
-public abstract class Person {
+import java.io.Serializable;
+
+public abstract class Person implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2232354864916313924L;
 	protected Name name;	// COMPOSITION - Person HAS-A name
 	protected String phoneNumber;
 	
@@ -27,7 +33,7 @@ public abstract class Person {
 	//		then displays address and phoneNumber
 	@Override  // Overrides Object toString()
 	public String toString() {
-		return name + "\t" + phoneNumber;		
+		return name + " Mobile No: " + phoneNumber;		
 	}
 	
 	// equals() method

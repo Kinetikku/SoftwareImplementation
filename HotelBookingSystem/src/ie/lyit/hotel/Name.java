@@ -1,6 +1,12 @@
 package ie.lyit.hotel;
 
-public class Name {
+import java.io.Serializable;
+
+public class Name implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4291969338822616308L;
 	private String title, firstName, surname;
 
 	public Name() {
