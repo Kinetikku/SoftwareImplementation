@@ -29,10 +29,11 @@ public class Employee extends Person implements Payable, Serializable {
 		this.number = nextNumber++;
 	}
 
-	public Employee(Name name, String phoneNo, Date dob, Date startDate, double salary) {
+	/*As stated in the design document I have went ahead an commented out the date and start date fields*/
+	public Employee(Name name, String phoneNo/*, Date dob, Date startDate*/, double salary) {
 		super(name, phoneNo);
-		this.dob = dob;
-		this.StartDate = startDate;
+		//this.dob = dob;
+		//this.StartDate = startDate;
 		this.salary = salary;
 		this.number = nextNumber++;
 	}
@@ -143,14 +144,15 @@ public class Employee extends Person implements Payable, Serializable {
 			}
 			catch(NumberFormatException nfe) {
 				System.out.println(nfe.getMessage());
-				this.setPhoneNumber("");
+				JOptionPane.showMessageDialog(null, "Employee was not created successfully, please try again");
+				read();
 			}
 			try {
 				if(Pattern.matches("[a-zA-Z]+", salary.getText()) == false)
-					if(Double.parseDouble(salary.getText()) <= MAX_SALARY)
+					if(Double.parseDouble(salary.getText()) <= MAX_SALARY || Double.parseDouble(salary.getText()) > 0.00)
 						this.setSalary(Double.parseDouble(salary.getText()));
 					else {
-						JOptionPane.showMessageDialog(null, "The salary entered is above the " + MAX_SALARY + " limit, try again");
+						JOptionPane.showMessageDialog(null, "The salary entered is either below or equal to 0.00, or above the " + MAX_SALARY + " limit, try again");
 						read();
 					}
 

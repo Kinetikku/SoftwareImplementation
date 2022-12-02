@@ -21,8 +21,10 @@ import javax.swing.JTextField;
 
 public class EmployeeSerializer {
 
+	//This is the AarayList that holds all employees that are being created and de-serialized
 	private ArrayList<Employee> employees;
 
+	//This is the filename of the bin file that holds all the serialized employees
 	final String FILENAME = "employee.bin";	
 
 	// Default Constructor
@@ -46,6 +48,9 @@ public class EmployeeSerializer {
 		// And add it to the employees ArrayList
 		employees.add(emp);
 
+		/*This try catch is here so that if the user incorrectly creates an employee
+		 * from inside the read() method, that the employee that is passed back with
+		 * some default values is removed as they don't meet the conditions set.*/
 		int count = -1;
 		try {
 			for(Employee emp1 : employees) {
@@ -89,6 +94,7 @@ public class EmployeeSerializer {
 	public Employee view() {
 		Employee tmpEmp = null;
 
+		//Create the text input box
 		JTextField empNumber = new JTextField();
 		empNumber.requestFocus();
 
@@ -102,6 +108,8 @@ public class EmployeeSerializer {
 
 		int option = JOptionPane.showConfirmDialog(dialog, message, "Enter Employee Details", JOptionPane.OK_CANCEL_OPTION);
 
+		/*This try catch checks if the number is able to be parsed, if it is then it
+		 * will return the employee details*/
 		if (option == JOptionPane.OK_OPTION){
 			try {
 				int empNum = Integer.parseInt(empNumber.getText());
@@ -121,7 +129,6 @@ public class EmployeeSerializer {
 				tmpEmp = view();
 			}
 		}
-
 		return tmpEmp;
 	}
 
@@ -134,12 +141,21 @@ public class EmployeeSerializer {
 	public void edit() {
 		Employee emp = view();
 
-		if(emp != null) {
-			int i = employees.indexOf(emp);
-			emp.read();
-			employees.set(i, emp);
+		/*Simply check if returned emp is null
+		 * if not then logs the index value into int i
+		 * then uses the read() method so the user can make changes
+		 * and if all goes correctly in the read()
+		 * it sets the object at index i, to the new employee*/
+		try {
+			if(emp != null) {
+				int i = employees.indexOf(emp);
+				emp.read();
+				employees.set(i, emp);
+			}
 		}
-
+		catch(IndexOutOfBoundsException iob) {
+			System.out.println(iob.getMessage());
+		}
 	}
 
 	///////////////////////////////////////////////////////
@@ -156,12 +172,12 @@ public class EmployeeSerializer {
 	}
 
 	// This method will serialize the employees ArrayList when called, 
-	// i.e. it will write it to a file called employees.ser
+	// i.e. it will write it to a file called employee.bin
+	// If one already exists it will override it
 	public void serializeEmployees(){
 		ObjectOutputStream os = null;
 
 		try {
-			// Serialize the ArrayList...
 			FileOutputStream fileStream = new FileOutputStream(FILENAME);
 
 			os = new ObjectOutputStream(fileStream);
@@ -184,12 +200,11 @@ public class EmployeeSerializer {
 		}
 	}
 	// This method will deserialize the employees ArrayList when called, 
-	// i.e. it will restore the ArrayList from the file employees.ser
+	// i.e. it will restore the ArrayList from the file employee.bin
 	public void deserializeEmployees(){
 		ObjectInputStream is = null;
 
 		try {
-			// Deserialize the ArrayList...
 			FileInputStream fileStream = new FileInputStream(FILENAME);
 
 			is = new ObjectInputStream(fileStream);
@@ -210,9 +225,9 @@ public class EmployeeSerializer {
 				//This if statement gets the last employee in the list and checks if their
 				//number is larger than the Employee.nextNumber variable. If it is, it passes
 				//the employees number + 1 to the Employee class and updates the number to the
-				//larger one. It'll do this everytime the app opens. It checks if the size is > 0
-				//because if you delete the bin file and run it without that check, it will throw
-				//an index out of bounds exception
+				//larger one. It'll do this everytime the app opens.
+				//It checks if the employees ArrayList size is > 0 because if you delete the bin
+				//file and run it without that check, it will throw an index out of bounds exception
 				if(employees.size() > 0)
 					if(employees.get(employees.size() - 1).getNumber() >= Employee.getNextNumber()) {
 						int num = employees.get(employees.size() - 1).getNumber();
