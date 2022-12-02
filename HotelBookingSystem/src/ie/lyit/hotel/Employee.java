@@ -40,7 +40,7 @@ public class Employee extends Person implements Payable, Serializable {
 	@Override
 	public String toString() {
 		DecimalFormat df = new DecimalFormat("#.00");
-		return "Emp No: " + number + " Name: " + super.toString() + " Salary: â‚¬" + df.format(salary);
+		return "Emp No: " + number + " Name: " + super.toString() + " Salary: €" + df.format(salary);
 	}
 
 	//Added this for the purpose of updating the next number to the largest

@@ -50,7 +50,7 @@ public class EmployeeSerializer {
 		try {
 			for(Employee emp1 : employees) {
 				++count;
-				if(emp1.getPhoneNumber().length() < 3 || emp1.getSalary() == 0.00)
+				if(emp1.getPhoneNumber().length() <= 7 || emp1.getSalary() == 0.00)
 					employees.remove(count);	
 			}
 		}
