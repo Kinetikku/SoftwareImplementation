@@ -11,9 +11,9 @@ public class Room {
 		if(adults > 2 || adults < 1)
 			throw new IllegalArgumentException("Maxium adults is 2, Minimum is 1");
 		if(kids > 3 || kids < 0)
-			throw new IllegalArgumentException(" Maxium kids is 3");
+			throw new IllegalArgumentException("Maxium kids is 3, Minimum is 0");
 		if(price < 60.00)
-			throw new IllegalArgumentException(" Minimum room price is 60.00");
+			throw new IllegalArgumentException("Minimum room price is 60.00");
 		
 		maxAdults = adults;
 		maxKids = kids;
@@ -22,15 +22,25 @@ public class Room {
 	}
 
 	public void setMaxAdults(int maxAdults) {
-		this.maxAdults = maxAdults;
+		if(maxAdults <= 2 && maxAdults >= 1)
+			this.maxAdults = maxAdults;
+		else {
+			throw new IllegalArgumentException("Maximum adults is 2, Minimum is 1");
+		}
 	}
 
 	public void setMaxKids(int maxKids) {
-		this.maxKids = maxKids;
+		if(maxKids <= 3 && maxKids >= 0)
+			this.maxKids = maxKids;
+		else
+			throw new IllegalArgumentException("Maximum kids is 3, Minimum is 0");
 	}
 
 	public void setPricePerNight(double pricePerNight) {
-		this.pricePerNight = pricePerNight;
+		if(pricePerNight >= 60.00)
+			this.pricePerNight = pricePerNight;
+		else
+			throw new IllegalArgumentException("Minimum room price is 60.00");
 	}
 
 	public void setAllocated(boolean allocated) {
