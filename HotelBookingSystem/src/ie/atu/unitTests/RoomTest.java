@@ -1,20 +1,27 @@
 package ie.atu.unitTests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+
 import ie.lyit.hotel.Room;
 
-class RoomTest {
+public class RoomTest {
+	Room room;
 	
-	Room room = new Room(2, 3, 60.00, 69);
+	@Before
+	public void setUp() throws Exception{
+		room = new Room(2, 3, 60.00, 69);
+
+	}
 	
 	@Test
 	public void testConstructor(){
 	    assertEquals(2, room.getMaxAdults());
 	    assertEquals(3, room.getMaxKids());
-	    assertEquals(60.00, room.getPricePerNight(), 0.01);
-	    assertTrue(room.isAllocated());
+	    assertEquals(room.getPricePerNight(), 60.00, 0.01);
+	    assertEquals(room.isAllocated(), false);
 	    assertEquals(69, room.getNumber());
 	}
 
